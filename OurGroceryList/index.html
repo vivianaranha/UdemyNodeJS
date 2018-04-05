@@ -1,0 +1,50 @@
+<html>
+<head>
+	<title>Our Grocery List</title>
+	<script
+  		src="https://code.jquery.com/jquery-3.3.1.min.js"
+  		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  		crossorigin="anonymous"></script>
+  	<script src="/socket.io/socket.io.js"></script>	
+</head>
+<body>
+	<h1>My Grocery List</h1>
+	<h3>What you want to add to List??</h3>
+	<input type="text" size="50" placeholder="Enter Item" id="itemBox">
+	<button id="addItemBtn"> Add </button>
+
+	<div id="listOfItems"></div>
+
+	<script type="text/javascript">
+		var socketIo = io();
+
+		socketIo.on('broadcast', addItem);
+
+		$(() => {
+			getAllItems();
+			$("#addItemBtn").click(() => {
+				//addItem({"item": $("#itemBox").val()});
+				var theItem = {"item":$("#itemBox").val()};
+				postItem(theItem);
+			});
+		});
+
+		function addItem(itemToAdd){
+			console.log(itemToAdd);
+			$("#listOfItems").prepend("<h4>"+ itemToAdd.item +"</h4>");
+			$("#itemBox").val('');
+		}
+
+		function getAllItems(){
+			$.get("http://localhost:3000/items", (data) => {
+				data.forEach(addItem);
+			})
+		}
+
+		function postItem(theItem){
+			$.post("http://localhost:3000/items", theItem);
+		}
+
+	</script>
+</body>
+</html>

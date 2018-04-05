@@ -1,0 +1,15 @@
+{
+  "name": "mycustomproject",
+  "version": "1.0.0",
+  "description": "My Custom Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vivian Aranha",
+  "license": "ISC",
+  "dependencies": {
+    "node-markdown": "*",
+    "jquery": "*"
+  }
+}
